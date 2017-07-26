@@ -1,2 +1,2 @@
 # webpack multiple page boilerplate
-this is a webpack+react+multiple page boilerplate,we Don't need react-router.
+this is a webpack+react+multiple page boilerplate,we don't need react-router.
