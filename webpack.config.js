@@ -29,9 +29,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist/'),
         //文件命名
-        filename: isDev ? 'js/[name].js?hash=[chunkHash:7]' : 'js/[name].[chunkHash:7].js',
+        filename: 'js/[name].js?hash=[chunkHash:7]',
         //切块的文件名
-        chunkFilename: isDev ? 'js/[name].js?hash=[chunkHash:7]' : 'js/[name].[chunkHash:7].js',
+        chunkFilename: 'js/[name].js?hash=[chunkHash:7]',
     },
     plugins: [
         //静态文件包，直接copy到发布目录。
