@@ -126,7 +126,7 @@ module.exports = {
 function entrys() {
     let obj = {};
     entries.map(function (item) {
-        obj[subHtmlName(item.filename)] = item.entry;
+        obj[item.filename] = item.entry;
     });
     return obj;
 }
@@ -137,7 +137,7 @@ function entrys() {
 function htmlPlugins() {
     let htmls = [];
     entries.map(function (item) {
-        item.chunks = item.chunks.concat([subHtmlName(item.filename)]);
+        item.chunks = item.chunks.concat([item.filename]);
         item.template = item.template || './template.ejs';//默认使用这个指定的ejs
         item.minify = {minifyJS: true, minifyCSS: true};
         item.chunksSortMode = function (...age) {
@@ -150,8 +150,4 @@ function htmlPlugins() {
     });
 
     return htmls;
-}
-
-function subHtmlName(url) {
-    return url.split('/').pop();
 }
