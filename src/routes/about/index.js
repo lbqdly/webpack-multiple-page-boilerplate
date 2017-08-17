@@ -4,9 +4,8 @@ import Root from '../../components/root';
 
 class Page extends Component {
     render() {
-        return (
-            <div> about! </div>
-        )
+        return <div> about! <a href="index.html">back to index</a></div>
+
     }
 }
 
