@@ -7,7 +7,6 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 let ExtractTextPlugin = require("extract-text-webpack-plugin");
-let InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 let entries = require('./entries');
 //环境变量，开发环境或者生产环境，npm将通过这个值来区分打包。
 let isDev = process.env.NODE_ENV === 'development';
@@ -15,16 +14,15 @@ let isDev = process.env.NODE_ENV === 'development';
 module.exports = {
     context: path.join(__dirname, 'src'),
     //代码插入方式
-    devtool: isDev ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
+    devtool: 'cheap-module-eval-source-map',
     //监听文件改动
     watch: isDev,
     //入口js文件
     entry: Object.assign({
         //react等公共包
         'vendor': ['react', 'react-dom'],
-        //其他公共包
-        'common': ['./commons/init'],
-        //...
+        'init': ['./commons/init'],
+        //...//您还可以在此添加其他公共包
     }, entrys()),
     output: {
         path: path.resolve(__dirname, 'dist/'),
@@ -37,11 +35,14 @@ module.exports = {
         //静态文件包，直接copy到发布目录。
         new CopyWebpackPlugin([{from: './statics', to: './statics'}]),
         //公共代码，使其他公共包稳定,用于缓存使用。
-        new webpack.optimize.CommonsChunkPlugin({names: ['manifest']}),
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor','init','manifest'],
+            minChunks: Infinity
+        }),
         //提取css文件。
         new ExtractTextPlugin({filename: 'css/styles.css'}),
         //嵌入模块序列js到head。
-        new InlineManifestWebpackPlugin()
+        //new InlineManifestWebpackPlugin()
     ].concat(htmlPlugins()).concat(
         isDev
             ? [
@@ -110,8 +111,8 @@ module.exports = {
         ]
     },
     resolve: {
-        //https://github.com/developit/preact/
         "alias": {
+            //https://github.com/developit/preact/
             //'react': 'preact-compat',
             //'react-dom': 'preact-compat'
         }
@@ -137,8 +138,8 @@ function entrys() {
 function htmlPlugins() {
     let htmls = [];
     entries.map(function (item) {
-        item.chunks = item.chunks.concat([item.filename]);
-        item.template = item.template || './template.ejs';//默认使用这个指定的ejs
+        item.chunks = ['manifest'].concat(item.chunks).concat([item.filename]);
+        item.template = item.template || './commons/template.ejs';//默认使用这个指定的ejs
         item.minify = {minifyJS: true, minifyCSS: true};
         item.chunksSortMode = function (...age) {
             let order = item.chunks.concat([]);

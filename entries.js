@@ -15,6 +15,6 @@ module.exports = [
     {
         filename: 'about.html',
         entry: './routes/about',
-        chunks: ['vendor', 'common'],
+        chunks: ['vendor', 'init'],
     },
 ];
