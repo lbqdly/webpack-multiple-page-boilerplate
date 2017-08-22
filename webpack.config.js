@@ -14,7 +14,7 @@ let isDev = process.env.NODE_ENV === 'development';
 module.exports = {
     context: path.join(__dirname, 'src'),
     //代码插入方式
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval-source-map' : 'source-map',
     //监听文件改动
     watch: isDev,
     //入口js文件
