@@ -104,7 +104,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 2048,
-                        name: './assets/[name].[hash:7].[ext]'
+                        name: '/assets/[name].[hash:7].[ext]'
                     }
                 }]
             }
