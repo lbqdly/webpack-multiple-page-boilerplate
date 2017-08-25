@@ -1,5 +1,5 @@
 /**
- * Created by aaron on 2017/4/10.
+ * Created by 5156 on 2017/4/10.
  */
 let path = require('path');
 let webpack = require('webpack');
@@ -14,7 +14,7 @@ let isDev = process.env.NODE_ENV === 'development';
 module.exports = {
     context: path.join(__dirname, 'src'),
     //代码插入方式
-    devtool: 'eval-source-map' : 'source-map',
+    devtool: isDev ? 'eval-source-map' : 'source-map',
     //监听文件改动
     watch: isDev,
     //入口js文件
@@ -36,7 +36,7 @@ module.exports = {
         new CopyWebpackPlugin([{from: './statics', to: './statics'}]),
         //公共代码，使其他公共包稳定,用于缓存使用。
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor','init','manifest'],
+            names: ['vendor', 'init', 'manifest'],
             minChunks: Infinity
         }),
         //提取css文件。
@@ -51,7 +51,7 @@ module.exports = {
                 {
                     server: {
                         baseDir: "dist",
-                        index: "index.html"
+                        index: "home.html"
                     }
                 },
                 {reload: true}

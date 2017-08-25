@@ -1,8 +1,8 @@
 module.exports = [
     {   //page name
-        filename: 'index.html',
+        filename: 'home.html',
         //entry js
-        entry: './routes/index',
+        entry: './components/home',
         //commons chunks
         chunks: ['vendor'],
         //title: 'my website',
@@ -14,7 +14,7 @@ module.exports = [
     },
     {
         filename: 'about.html',
-        entry: './routes/about',
+        entry: './components/about',
         chunks: ['vendor', 'init'],
     },
 ];
