@@ -1,7 +1,7 @@
 # webpack multiple page boilerplate
 This is a webpack+react+multiple page boilerplate,we don't need react-router.
 
-这是一个webpack+react+多页面样版，避免了使用react-router。
+这是一个webpack+react多页面样版，避免了使用react-router。
 
 ## usage
 Just add the options to `entries.js` config as follows ( base on [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)) :
