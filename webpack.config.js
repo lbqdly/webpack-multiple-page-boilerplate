@@ -71,12 +71,13 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader']
             },
+
+            //less文件将使用cssmodules
             {
                 test: /\.less/,
                 exclude: /node_modules/,
                 use: [
                     'style-loader',
-                    //less文件将使用cssmodules
                     {
                         loader: 'css-loader',
                         options: {
@@ -139,7 +140,7 @@ function htmlPlugins() {
     let htmls = [];
     entries.map(function (item) {
         item.chunks = ['manifest'].concat(item.chunks).concat([item.filename]);
-        item.template = item.template || './commons/template.ejs';//默认使用这个指定的ejs
+        item.template = item.template || './template.ejs';//默认使用这个指定的ejs
         item.minify = {minifyJS: true, minifyCSS: true};
         item.chunksSortMode = function (...age) {
             let order = item.chunks.concat([]);
