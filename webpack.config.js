@@ -127,7 +127,7 @@ module.exports = {
  */
 function entrys() {
     let obj = {};
-    entries.map(function (item) {
+    entries.forEach(function (item) {
         obj[item.filename] = item.entry;
     });
     return obj;
@@ -138,7 +138,7 @@ function entrys() {
  */
 function htmlPlugins() {
     let htmls = [];
-    entries.map(function (item) {
+    entries.forEach(function (item) {
         item.chunks = ['manifest'].concat(item.chunks).concat([item.filename]);
         item.template = item.template || './template.ejs';//默认使用这个指定的ejs
         item.minify = {minifyJS: true, minifyCSS: true};
