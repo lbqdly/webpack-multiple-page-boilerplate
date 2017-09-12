@@ -1,15 +1,27 @@
 /**
  * Created by 5156 on 2017/4/10.
  */
-let path = require('path');
-let webpack = require('webpack');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
-let CopyWebpackPlugin = require('copy-webpack-plugin');
-let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-let ExtractTextPlugin = require("extract-text-webpack-plugin");
-let entries = require('./entries');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
+const entries = require('./entries');
 //环境变量，开发环境或者生产环境，npm将通过这个值来区分打包。
-let isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
+
+const postcssLoader = {
+    loader: 'postcss-loader',
+    options: {
+        plugins: (loader) => [
+            autoprefixer({browsers: ['iOS 7', 'Android >= 4.0', '> 1%']}),
+            cssnano()
+        ]
+    }
+};
 
 module.exports = {
     context: path.join(__dirname, 'src'),
@@ -86,7 +98,7 @@ module.exports = {
                             importLoaders: 1
                         }
                     },
-                    'postcss-loader',
+                    postcssLoader,
                     'less-loader'
                 ]
             },
@@ -96,7 +108,7 @@ module.exports = {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader?importLoaders=1', 'postcss-loader']
+                    use: ['css-loader?importLoaders=1', postcssLoader]
                 })
             },
             {
