@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const entries = require('./entries');
@@ -45,37 +44,27 @@ module.exports = {
     },
     plugins: [
         //静态文件包，直接copy到发布目录。
-        new CopyWebpackPlugin([{from: './statics', to: './statics'}]),
-        //公共代码，使其他公共包稳定,用于缓存使用。
-        new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor', 'init', 'manifest'],
-            minChunks: Infinity
-        }),
-        //提取css文件。
-        new ExtractTextPlugin({filename: 'css/styles.css'}),
-        //嵌入模块序列js到head。
-        //new InlineManifestWebpackPlugin()
-    ].concat(htmlPlugins()).concat(
-        isDev
-            ? [
-            //开启自动刷新
-            new BrowserSyncPlugin(
-                {
-                    server: {
-                        baseDir: "dist",
-                        index: "home.html"
-                    }
-                },
-                {reload: true}
-            )]
-            : [
-            //开启代码压缩
-            new webpack.optimize.UglifyJsPlugin({
-                sourceMap: true,
-                comments: false,
-                compress: {warnings: true}
-            })]
-    ),
+        new CopyWebpackPlugin([{from: './statics', to: './statics'}])]
+        .concat(htmlPlugins()).concat(
+            isDev
+                ? [
+                //开启自动刷新
+                new BrowserSyncPlugin({
+                        server: {
+                            baseDir: "dist",
+                            index: "home.html"
+                        }
+                    },
+                    {reload: true}
+                )]
+                : [
+                //开启代码压缩
+                new webpack.optimize.UglifyJsPlugin({
+                    sourceMap: true,
+                    comments: false,
+                    compress: {warnings: true}
+                })]
+        ),
     module: {
         rules: [
             {
@@ -106,10 +95,7 @@ module.exports = {
             //css文件引入全局受用。
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader?importLoaders=1', postcssLoader]
-                })
+                use: ['style-loader', 'css-loader', postcssLoader]
             },
             {
                 test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
