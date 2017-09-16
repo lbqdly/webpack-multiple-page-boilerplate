@@ -43,8 +43,14 @@ module.exports = {
         chunkFilename: 'js/[name].js?hash=[chunkHash:7]',
     },
     plugins: [
+        //公共代码，使其他公共包稳定,用于缓存使用。
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor', 'init', 'manifest'],
+            minChunks: Infinity
+        }),
         //静态文件包，直接copy到发布目录。
         new CopyWebpackPlugin([{from: './statics', to: './statics'}])]
+
         .concat(htmlPlugins()).concat(
             isDev
                 ? [

@@ -25,3 +25,6 @@ Just add the options to `entries.js` config as follows ( base on [html-webpack-p
 }
 ```
 
+`npm run dev` ：开始编码
+
+`npm run build` ：构建用于发布的代码到dist目录
