@@ -28,13 +28,6 @@ module.exports = {
     devtool: isDev ? 'eval-source-map' : 'source-map',
     //监听文件改动
     watch: isDev,
-    //入口js文件
-    entry: Object.assign({
-        //react等公共包
-        'vendor': ['react', 'react-dom'],
-        'init': ['./commons/init'],
-        //...//您还可以在此添加其他公共包
-    }, entrys()),
     output: {
         path: path.resolve(__dirname, 'dist/'),
         //文件命名
@@ -42,10 +35,18 @@ module.exports = {
         //切块的文件名
         chunkFilename: 'js/[name].js?hash=[chunkHash:7]',
     },
+    //入口js文件
+    entry: Object.assign({
+        //提取公共包
+        'vendor0': ['vue'],
+        'vendor1': ['react', 'react-dom'],
+        //...
+        //您还可以在此添加其他公共包,但请记得也在CommonsChunkPlugin配置中添加。
+    }, entrys()),
     plugins: [
-        //公共代码，使其他公共包稳定,用于缓存使用。
+        //公共代码包
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor', 'init', 'manifest'],
+            names: ['vendor0', 'vendor1', /*'vendor2',...*/ 'manifest'],
             minChunks: Infinity
         }),
         //静态文件包，直接copy到发布目录。
@@ -58,7 +59,7 @@ module.exports = {
                 new BrowserSyncPlugin({
                         server: {
                             baseDir: "dist",
-                            index: "home.html"
+                            index: "page0.html"
                         }
                     },
                     {reload: true}
@@ -119,7 +120,8 @@ module.exports = {
         "alias": {
             //https://github.com/developit/preact/
             //'react': 'preact-compat',
-            //'react-dom': 'preact-compat'
+            //'react-dom': 'preact-compat',
+            'vue$': 'vue/dist/vue.js'
         }
     }
 };

@@ -1,7 +1,7 @@
 # webpack multiple page boilerplate
-This is a webpack+react+multiple page boilerplate,we don't need react-router.
+This is a webpack multiple page boilerplate,we don't need router.
 
-这是一个webpack+react多页面样版，避免了使用react-router。
+这是一个使用webpack构建多页面样版，避免了使用router。
 
 ## usage
 Just add the options to `entries.js` config as follows ( base on [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)) :
@@ -25,6 +25,12 @@ Just add the options to `entries.js` config as follows ( base on [html-webpack-p
 }
 ```
 
-`npm run dev` ：开始编码
+开始编码
 
-`npm run build` ：构建用于发布的代码到dist目录
+`npm run dev` 
+
+
+
+构建可用于发布的代码
+
+`npm run build` 
