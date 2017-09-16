@@ -10,10 +10,10 @@ Just add the options to `entries.js` config as follows ( base on [html-webpack-p
 
 ```javascript
 {   
-  //page name
-  filename: 'index.html',
-  //entry js
-  entry: './routes/index',
+  //page html name
+  filename: 'page0.html',
+  //page entry js
+  entry: './pages/page0',
   //commons chunks
   chunks: ['vendor'],
   //title: 'my website',
