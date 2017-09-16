@@ -40,13 +40,13 @@ module.exports = {
         //提取公共包
         'vendor0': ['vue'],
         'vendor1': ['react', 'react-dom'],
-        //...
+        //...'vendor2': ['...'],
         //您还可以在此添加其他公共包,但请记得也在CommonsChunkPlugin配置中添加。
     }, entrys()),
     plugins: [
         //公共代码包
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor0', 'vendor1', /*'vendor2',...*/ 'manifest'],
+            names: ['vendor0', 'vendor1', /*'vendor2'*/ 'manifest'],
             minChunks: Infinity
         }),
         //静态文件包，直接copy到发布目录。
